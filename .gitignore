@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/db_utils/db.config
+/db_utils/ssq.csv
