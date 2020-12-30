@@ -16,10 +16,10 @@ class SsqHistory(object):
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive'
         }
-        
+        params=None
         proxies=None
 
-        rsp = requests.get(url, params=headers, proxies=proxies)
+        rsp = requests.get(url, headers=headers, params=params, proxies=proxies)
         rsp.raise_for_status()
         return rsp.text
 
