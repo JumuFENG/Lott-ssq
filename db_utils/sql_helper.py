@@ -190,9 +190,8 @@ class SqlHelper():
                 print mydb.select(table, fields=["age", "name"])
                 print mydb.select(table, fields=["age", "name"], conds = ["name = 'usr_name'","age < 30"])
         """
-        if isinstance(fields, list):
-            fields = ",".join(fields)
-        sql = 'select %s from %s ' % (fields, tablename)
+        sql = ','.join(fields) if isinstance(fields, list) else fields
+        sql = 'select %s from %s ' % (sql, tablename)
 
         consql = ''
         if conds != '':

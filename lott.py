@@ -16,17 +16,10 @@ class LottSsq():
     def get_blue_balls(self):
         return self.db.select('ssq_history', 'blue', order=' ORDER BY id DESC')
 
-    def get_latest_id(self):
-        id = self.db.select('ssq_history', 'MAX(id)')
-        if id is not None and len(id) == 1:
-            return id[0]
-        return None
-
-    def get_date_by_id(self, id):
-        date = self.db.select('ssq_history', 'date', ['id = "%s"' % id])
-        if date is not None and len(date) == 1:
-            return date[0]
-        return None
+    def get_latest_id_date(self):
+        dd = self.db.select('ssq_history', ['id', 'date'], ['id = ( select MAX(id) from ssq_history )'])
+        if dd is not None and len(dd) == 1:
+            return dd[0]
 
     def add_ssq_detail(self, sdata):
         self.db.insert('ssq_history', sdata)
@@ -34,10 +27,13 @@ class LottSsq():
 if __name__ == '__main__':
     sq = LottSsq()
     sq.load_db_config()
-    t = sq.get_latest_id()
-    d = sq.get_date_by_id(t)
+    td = sq.get_latest_id_date()
+    if td is None:
+        print("error when get_latest_id_date!")
+        exit()
     hist = SsqHistory()
-    sqdetail = hist.get_next_term(t, d)
+    sqdetail = hist.get_next_term(td['id'], td['date'])
+    print(sqdetail)
     if sqdetail is not None:
         sq.add_ssq_detail(sqdetail)
     blueball = sq.get_blue_balls()
