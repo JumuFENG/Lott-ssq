@@ -33,9 +33,10 @@ if __name__ == '__main__':
         exit()
     hist = SsqHistory()
     sqdetail = hist.get_next_term(td['id'], td['date'])
-    print(sqdetail)
-    if sqdetail is not None:
+    while sqdetail is not None:
+        print(sqdetail)
         sq.add_ssq_detail(sqdetail)
+        sqdetail = hist.get_next_term(sqdetail['id'], sqdetail['date'])
     blueball = sq.get_blue_balls()
     print(blueball[0:20])
     b = get_random_blue_number(blueball)

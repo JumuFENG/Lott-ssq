@@ -3,8 +3,7 @@
 
 import requests
 import re
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime,timedelta,date
 
 class SsqHistory(object):
     def get_request(self, url):
@@ -90,6 +89,10 @@ class SsqHistory(object):
     def get_next_term(self, lastid, lastdate = None):
         if lastdate is None:
             return self.get_ssq_details(int(lastid) + 1)
+        if isinstance(lastdate, str):
+            lastdate = datetime.strptime(lastdate, '%Y-%m-%d').date()
+        if not isinstance(lastdate, date):
+            print('error argument lastdate: %s, %s' % (lastdate, type(lastdate)))
             
         today = datetime.today().date()
         nextdate = lastdate + timedelta(days = 1)
