@@ -34,7 +34,7 @@ if __name__ == '__main__':
     hist = SsqHistory()
     sqdetail = hist.get_next_term(td['id'], td['date'])
     while sqdetail is not None:
-        print(sqdetail)
+        #print(sqdetail)
         sq.add_ssq_detail(sqdetail)
         sqdetail = hist.get_next_term(sqdetail['id'], sqdetail['date'])
     blueball = sq.get_blue_balls()
